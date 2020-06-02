@@ -1,23 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>
-		{% block title %}
-			Flask | 
-		{% endblock title %}
-	</title>
-	<link rel="stylesheet" href={{ url_for('static', filename='css/main.css')}}>
+{% extends 'bootstrap/base.html' %}
 
-</head>
-<body>
-	<header>
+{% block head %}
+	{{ super() }}
+	{% block title %}
+		Flask | 
+	{% endblock title %}
+	
+	<link rel="stylesheet" href={{ url_for('static', filename='css/main.css') }}>
+{% endblock head %}
+
+{% block body %}
+	{% block navbar %}
 		{% include 'navbar.html' %}
-	</header>
-
+	{% endblock navbar %}
+	
 	{% block content %}
 
 	{% endblock content %}
-</body>
-</html>
+{% endblock body %}

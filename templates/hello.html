@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% import 'macros.html' as macros %}
+
 {% block title %}
 	{{ super() }}
 	Hello
@@ -13,7 +15,7 @@
 
 	<ul>
 		{% for todo in todos %}
-			<li>{{todo}}</li>
+			{{ macros.render_todo(todo) }}
 		{% endfor %}
 	</ul>
 {% endblock content %}

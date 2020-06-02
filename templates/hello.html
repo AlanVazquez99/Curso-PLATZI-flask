@@ -1,15 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hello</title>
-  </head>
-  <body>
 	{% if user_ip %}
 		<h1>Hello world {{ user_ip }}</h1>
 	{% else %}
 		<a href="{{ url_for('index') }}">Ir a inicio</a>
 	{% endif %}
-  </body>
-</html>

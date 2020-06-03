@@ -1,4 +1,4 @@
-from flask import Flask, request, make_response, redirect, render_template, abort, session
+from flask import Flask, request, make_response, redirect, render_template, session, flash
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
 from wtforms.fields import StringField, PasswordField, SubmitField
@@ -21,17 +21,12 @@ class LoginForm(FlaskForm):
 
 @app.errorhandler(404)
 def error_not_found(error):
-    return render_template('404.html', error=error)
+    return render_template('./errors/404.html', error=error)
 
 
 @app.errorhandler(500)
 def error_server(error):
     return render_template('./errors/500.html', error=error)
-
-
-@app.route('/errors/500')
-def error_500():
-    abort(500)
 
 
 @app.route('/')
@@ -56,6 +51,7 @@ def hello():
 
     if login_form.validate_on_submit():
         session['username'] = login_form.username.data
+        flash('El usuario se ha registrado con éxito', 'info')
         return redirect('/')
 
     return render_template('hello.html', **contex)

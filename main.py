@@ -5,6 +5,9 @@ from app.forms import LoginForm
 from app import create_app
 
 from app import firestore_service as db
+
+from flask_login import login_required, current_user
+
 app = create_app()
 
 todos = ['TODO 1', 'TODO 2', 'TODO 3']
@@ -38,8 +41,9 @@ def index():
 
 
 @app.route('/hello', methods=['GET', 'POST'])
+@login_required
 def hello():
-    username = session.get('username')
+    username = current_user.id
     contex = {
         'user_ip': session.get('user_ip'),
         'todos': db.get_todos(username),

@@ -4,6 +4,7 @@ import unittest
 from app.forms import LoginForm
 from app import create_app
 
+from app import firestore_service as db
 app = create_app()
 
 todos = ['TODO 1', 'TODO 2', 'TODO 3']
@@ -38,9 +39,11 @@ def index():
 
 @app.route('/hello', methods=['GET', 'POST'])
 def hello():
+    username = session.get('username')
     contex = {
         'user_ip': session.get('user_ip'),
-        'todos': todos,
-        'username': session.get('username'),
+        'todos': db.get_todos(username),
+        'username': username,
     }
+
     return render_template('hello.html', **contex)

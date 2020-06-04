@@ -38,17 +38,9 @@ def index():
 
 @app.route('/hello', methods=['GET', 'POST'])
 def hello():
-    login_form = LoginForm()
     contex = {
         'user_ip': session.get('user_ip'),
         'todos': todos,
-        'login_form': login_form,
         'username': session.get('username'),
     }
-
-    if login_form.validate_on_submit():
-        session['username'] = login_form.username.data
-        flash('El usuario se ha registrado con éxito', 'info')
-        return redirect('/')
-
     return render_template('hello.html', **contex)

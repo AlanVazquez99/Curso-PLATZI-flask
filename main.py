@@ -1,18 +1,12 @@
 from flask import request, make_response, redirect, render_template, session, flash
+from flask_login import login_required, current_user
 import unittest
 
-from app.forms import LoginForm
 from app import create_app
-
+from app import forms as form
 from app import firestore_service as db
 
-from flask_login import login_required, current_user
-
 app = create_app()
-
-todos = ['TODO 1', 'TODO 2', 'TODO 3']
-
-
 
 @app.cli.command()
 def test():
@@ -44,10 +38,17 @@ def index():
 @login_required
 def hello():
     username = current_user.id
+    todo_form = form.TodoForm()
     contex = {
         'user_ip': session.get('user_ip'),
         'todos': db.get_todos(username),
         'username': username,
+        'todo_form': todo_form
     }
+
+    if todo_form.validate_on_submit():
+        description = todo_form.description.data
+        db.todo_put(username, description)
+        flash('Tarea agregada con exito')
 
     return render_template('hello.html', **contex)

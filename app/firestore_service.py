@@ -4,7 +4,6 @@ from firebase_admin import firestore
 
 credential = credentials.ApplicationDefault()
 firebase_admin.initialize_app(credential)
-
 db = firestore.client()
 
 
@@ -23,3 +22,8 @@ def user_put(user_data):
     user_ref = db.collection('users').document(user_data.username)
     user_ref.set( {'password': user_data.password} )
     
+def todo_put(user_id, description):
+    db.collection('users') \
+        .document(user_id) \
+        .collection('todos') \
+        .add( {'description': description} )

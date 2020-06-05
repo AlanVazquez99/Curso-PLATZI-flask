@@ -2,6 +2,7 @@
 {% import 'macros.html' as macros %}
 {% import 'bootstrap/wtf.html' as wtf %}
 
+
 {% block title %}
 	{{ super() }}
 	Hello
@@ -21,7 +22,13 @@
 				{{ macros.render_todo(todo) }}
 			{% endfor %}
 		</ul>
-	{% else %}	
 
+		<h2>Agregar una nueva tarea</h2>
+		<div class="container">
+			{{ wtf.quick_form(todo_form) }}
+		</div>
+
+	{% else %}
+		<a href="{{ url_for('sigup') }}"></a>
 	{% endif %}
 {% endblock content %}
